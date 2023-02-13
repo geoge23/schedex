@@ -23,4 +23,4 @@ RUN chmod 0644 /etc/cron.d/crontab
 RUN touch /var/log/cron.log
 
 # run the command on container startup
-CMD cron && tail -f /var/log/cron.log
+CMD /app/setup.sh

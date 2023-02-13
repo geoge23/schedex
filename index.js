@@ -5,6 +5,9 @@ import cheerio from 'cheerio';
 import { wrapper as cookieJarWrapper } from 'axios-cookiejar-support';
 import { CookieJar } from 'tough-cookie';
 import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const jar = new CookieJar();
 const axios = cookieJarWrapper(axiosRoot.create({ jar }));
