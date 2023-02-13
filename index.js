@@ -119,7 +119,11 @@ async function login(user, pass) {
     //if there's already a veracross session (_veracross_session) in the jar, return
     if (jar.getCookiesSync('https://portals.veracross.com/woodward/session').includes('_veracross_session')) return;
 
-    const homepageRequest = await axios.get('https://accounts.veracross.com/woodward/portals/login/password?username=doctorsambrown%40hotmail.com');
+    const homepageRequest = await axios.get('https://accounts.veracross.com/woodward/portals/login/password', {
+        params: {
+            username: user,
+        }
+    });
     const $homepage = cheerio.load(homepageRequest.data);
     
     authenticityToken = $homepage('meta[name="csrf-token"]').attr('content');
