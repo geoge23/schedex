@@ -7,7 +7,7 @@ import { CookieJar } from 'tough-cookie';
 import { MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: '/app/.env' });
 
 const jar = new CookieJar();
 const axios = cookieJarWrapper(axiosRoot.create({ jar }));
