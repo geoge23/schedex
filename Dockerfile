@@ -14,13 +14,13 @@ RUN npm install
 COPY . /app
 
 # copy the cron job
-COPY cronjob /etc/cron.d/cronjob
+ADD crontab /etc/cron.d/crontab
 
 # give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/cronjob
+RUN chmod 0644 /etc/cron.d/crontab
 
-# apply cron job
-RUN crontab /etc/cron.d/cronjob
+# create log for cron
+RUN touch /var/log/cron.log
 
 # run the command on container startup
-CMD cron
+CMD cron && tail -f /var/log/cron.log
