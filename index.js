@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import axiosRoot from 'axios';
 import cheerio from 'cheerio';
 import { wrapper as cookieJarWrapper } from 'axios-cookiejar-support';
@@ -29,8 +31,6 @@ const [start, _] = weekToDateRange(currentWeek);
 const [__, end] = weekToDateRange(currentWeek + 1);
 
 const scheduleDays = await getScheduleDays(start, end);
-
-console.log(scheduleDays)
 
 const pendingUpdates = await Promise.allSettled(Object.entries(scheduleDays).map(async ([date, schedule]) => {
     return daysCollection.updateOne({ date }, { $set: { schedule } }, { upsert: true });
