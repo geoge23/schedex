@@ -23,4 +23,4 @@ RUN chmod 0644 /etc/cron.d/cronjob
 RUN crontab /etc/cron.d/cronjob
 
 # run the command on container startup
-CMD cron && tail -f /var/log/cron.log
+CMD cron
