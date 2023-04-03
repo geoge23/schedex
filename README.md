@@ -13,5 +13,9 @@ the MongoDB database powering [WADaily](https://github.com/geoge23/wadaily).
 ## Filtering Logic
 SCHEDEX finds Veracross calendar events for the current and following week. It then filters events to find all with a background color of black (The color of the calendar containing schedule days). These days are parsed by checking `event.description`, which contains text. 
 
-## Docker + Cron
-SCHEDEX is designed to be run in a Docker container. It includes a docker image that runs once a week on Sunday at 12:00 AM. The image is available on GHCR at `ghcr.io/geoge23/schedex:latest`.
+## Docker
+SCHEDEX is designed to be run in a Docker container. The container is one-shot, and will connect to the MongoDB instance and download schedules automatically. The image is available on GHCR at `ghcr.io/geoge23/schedex:latest`. To schedule the container to run every day at 3:00 AM, add the following to your crontab:
+
+```cron
+0 3 * * * docker run --rm -e MONGO_URI=<MONGO_URI> -e VERACROSS_USERNAME=<VERACROSS_USERNAME> -e VERACROSS_PASSWORD=<VERACROSS_PASSWORD> ghcr.io/geoge23/schedex:latest
+```
