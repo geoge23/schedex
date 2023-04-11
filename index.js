@@ -29,9 +29,9 @@ await client.connect();
 const db = client.db('wadaily');
 const daysCollection = db.collection('days');
 
-const currentWeek = getCurrentWeek();
-const [start, _] = weekToDateRange(currentWeek);
-const [__, end] = weekToDateRange(currentWeek + 1);
+const start = new Date();
+const end = new Date();
+end.setDate(start.getDate() + 15);
 
 const scheduleDays = await getScheduleDays(start, end);
 
@@ -56,27 +56,6 @@ function formatDateAsVeracross(date) {
 function formatDateAsWADaily(date) {
     //return date like MM-DD-YY
     return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear().toString().slice(2)}`;
-}
-
-function weekToDateRange(week) {
-    const date = new Date();
-    const day = date.getDay();
-    const diff = date.getDate() - day + (day == 0 ? -6 : 1) + (week * 7);
-    const monday = new Date(date.setDate(diff));
-    const sunday = new Date(date.setDate(monday.getDate() + 6));
-    return [monday, sunday];
-}
-
-function getCurrentWeek() {
-    //returns week 1-52
-    const date = new Date();
-    const day = date.getDay();
-    const diff = date.getDate() - day + (day == 0 ? -6 : 1);
-    const monday = new Date(date.setDate(diff));
-    const firstDayOfYear = new Date(date.setDate(1));
-    const firstMondayOfYear = new Date(date.setDate(firstDayOfYear.getDate() + (7 - firstDayOfYear.getDay()) % 7));
-    const week = Math.ceil((((monday - firstMondayOfYear) / 86400000) + 1) / 7);
-    return week;
 }
 
 async function getScheduleDays(start, end) {    
@@ -106,6 +85,8 @@ async function getScheduleDays(start, end) {
             scheduleDays[dateKey] = 'ABLK';
         } else if (event.description.indexOf('B Day') != -1) {
             scheduleDays[dateKey] = 'BBLK';
+        } else if (event.description.indexOf('X Day') != -1) {
+            scheduleDays[dateKey] = 'XDAY';
         } else {
             const day = /Day (\d)/.exec(event.description)[1];
             scheduleDays[dateKey] = `DAY${day}`;
