@@ -50,7 +50,6 @@ console.log(`Closed connection to MongoDB after updating ${pendingUpdates.filter
 
 function formatDateAsVeracross(date) {
     //return date like MM/DD/YYYY
-    //example changes
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 }
 
