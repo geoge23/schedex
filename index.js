@@ -49,7 +49,7 @@ client.close()
 console.log(`Closed connection to MongoDB after updating ${pendingUpdates.filter(e => e.status == "fulfilled").length} records. Exiting...`)
 
 function formatDateAsVeracross(date) {
-    //return date like MM/DD/YYYY
+    //return date like MM/DD/YYYY aaa
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 }
 
